@@ -1,0 +1,19 @@
+/*
+ *
+ * AVAX Toolbox - An Avalanche Toolbox
+ * Copyright (C) 2023 AVAX Buildr @avaxbuildr
+
+ *
+ *
+ * For more information, visit:
+ * https://crypto.bi
+ * https://avax.to
+ * https://twitter.com/avaxbuildr
+ *
+ *
+ **/
+
+rootProject.name = 'avax-toolbox'
+include('app')
+include(':avalanchej')
+project(':avalanchej').projectDir = new File("../avalanchej/")
