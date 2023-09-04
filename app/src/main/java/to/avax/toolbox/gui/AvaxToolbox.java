@@ -17,14 +17,10 @@ import to.avax.toolbox.gui.common.ToolboxUtils;
 import to.avax.toolbox.gui.common.ToolboxStatusBar;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import to.avax.toolbox.gui.main.ToolboxMainMenu;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class AvaxToolbox {
@@ -35,13 +31,10 @@ public class AvaxToolbox {
     private ToolboxFrame mainFrame;
     private JTabbedPane mainPane;
 
-    public static void main(String args[]) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                AvaxToolbox mainApp = new AvaxToolbox();
-                mainApp.initGUI();
-
-            }
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            AvaxToolbox mainApp = new AvaxToolbox();
+            mainApp.initGUI();
         });
     }
 
@@ -59,20 +52,7 @@ public class AvaxToolbox {
         JPanel homePanel = new JPanel();
         homePanel.setLayout(new BorderLayout());
 
-        var centerLabelHtml = """
-                    <center>
-                        <span style="color: #ff0000; font-size: 15px; font-family: sans-serif; text-decoration: none;">
-                        <a href="https://crypto.bi">crypto.bi</a> 
-                        &nbsp; | &nbsp; 
-                        <a href="https://avax.to">avax.to</a>
-                        &nbsp; | &nbsp;
-                        <a href="https://twitter.com/avaxto">@avaxto</a>
-                        &nbsp; | &nbsp;
-                        <a href="https://twitter.com/avaxbuildr">@avaxbuildr</a>
-                        </span>
-                    </center>
-                """;
-
+        var centerLabelHtml = to.avax.toolbox.utils.ToolboxUtils.readResourceAsString("/home.html");
         ImageIcon icon;
         Image i = ToolboxUtils.getImage("avaxto.png");
         if (i != null) {
@@ -97,16 +77,12 @@ public class AvaxToolbox {
         jep.setEditable(false);
         jep.setBackground(Color.BLACK);
 
-        jep.addHyperlinkListener(new HyperlinkListener() {
-            public void hyperlinkUpdate(HyperlinkEvent hle) {
-                if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {
-                    try {
-                        Desktop.getDesktop().browse(hle.getURL().toURI());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (URISyntaxException e) {
-                        throw new RuntimeException(e);
-                    }
+        jep.addHyperlinkListener(hle -> {
+            if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {
+                try {
+                    Desktop.getDesktop().browse(hle.getURL().toURI());
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -132,16 +108,11 @@ public class AvaxToolbox {
         mainFrame.setVisible(true);
 
         KeyboardFocusManager keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        keyManager.addKeyEventDispatcher(new KeyEventDispatcher() {
-
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_W && e.isControlDown()) {
-                    getMainPane().remove(getMainPane().getSelectedComponent());
-                }
-                return false;
+        keyManager.addKeyEventDispatcher(e -> {
+            if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_W && e.isControlDown()) {
+                getMainPane().remove(getMainPane().getSelectedComponent());
             }
-
+            return false;
         });
     }
 

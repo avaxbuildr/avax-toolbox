@@ -36,6 +36,7 @@ public class ValidatorToolPanel extends AvaxtoPanel {
     public ValidatorToolPanel(ToolboxFrame tf) {
 
         super(tf);
+        setLayout(new BorderLayout());
 
         avalanche = new Avalanche(MainnetConfig);
         pChain = avalanche.getPlatformVMAPI();

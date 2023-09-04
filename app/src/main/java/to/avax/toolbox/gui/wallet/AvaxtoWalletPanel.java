@@ -26,7 +26,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
 
     JLabel statusLabel;
     private String mnemonic;
-    private JPanel centralPanel;
+    final private JPanel centralPanel;
     JPanel unloggedPanel;
     HdWalletCore wallet;
     JPanel xAddressesPanel;
@@ -34,6 +34,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     JTextArea xAddressesTextArea;
     JTextArea pAddressesTextArea;
     int addressCount = 20;
+    AvaxtoWalletMainMenu jmb;
 
     public void listPAddresses() {
         pAddressesTextArea.setText("");
@@ -41,7 +42,8 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         HdHelper hdh = wallet.getPlatformHelper();
         for (int index=0; index<addressCount; index++) {
             String address = hdh.getAddressForIndex(index);
-            sb.append(address + "\n");
+            sb.append(address);
+            sb.append("\n");
         }
         pAddressesTextArea.setText(sb.toString());
         centralPanel.removeAll();
@@ -55,7 +57,8 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         HdHelper hdh = wallet.getExternalHelper();
         for (int index=0; index<addressCount; index++) {
             String address = hdh.getAddressForIndex(index);
-            sb.append(address + "\n");
+            sb.append(address);
+            sb.append("\n");
         }
         xAddressesTextArea.setText(sb.toString());
         centralPanel.removeAll();
@@ -66,16 +69,16 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     // has a mnemonic or privkey and can be activated
     private void activateWalletPane(){
         centralPanel.removeAll();
-        JLabel l = new JLabel("Wallet ready.");
-        centralPanel.add(l);
-        statusLabel.setText("Wallet initialized");
+        centralPanel.add(new JPanel());
+        statusLabel.setText("Wallet ready");
     }
     public AvaxtoWalletPanel(ToolboxFrame tf) {
         super(tf);
+        setLayout(new BorderLayout());
 
         centralPanel = new JPanel();
 
-        AvaxtoWalletMainMenu jmb = new AvaxtoWalletMainMenu(this);
+        jmb = new AvaxtoWalletMainMenu(this);
         add(jmb, BorderLayout.NORTH);
 
         unloggedPanel = new JPanel();

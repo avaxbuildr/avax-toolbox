@@ -40,52 +40,58 @@ public class WalletGeneratorPanel extends AvaxtoPanel {
         buttonsPanel.setBorder(new EmptyBorder(3,3,3,3));
         ((FlowLayout)buttonsPanel.getLayout()).setAlignment(FlowLayout.LEFT);
 
-        JButton jb = new JButton("Generate");
-        JButton jb2 = new JButton("▶ Wallet Helper");
-        JButton jb3 = new JButton("Copy Mnemonic");
-        JButton jb4 = new JButton("Clear");
+        JButton generateButton = new JButton("Generate");
+        JButton helperButton = new JButton("▶ Wallet Helper");
+        JButton copyButton = new JButton("Copy Mnemonic");
+        JButton clearButton = new JButton("Clear");
 
-        jb2.setEnabled(false);
-        jb3.setEnabled(false);
-        jb4.setEnabled(false);
+        helperButton.setEnabled(false);
+        copyButton.setEnabled(false);
+        clearButton.setEnabled(false);
 
-        jb.setToolTipText("Generate a new Avalanche mnemonic phrase");
-        jb2.setToolTipText("Open the mnemonic phrase in AVAX Wallet Helper");
-        jb3.setToolTipText("Copy the mnemonic phrase to system clipboard. Make sure to clear ASAP.");
-        jb4.setToolTipText("Clear the mnemonic phrase from system clipboard and visible textbox. Cannot be undone.");
+        generateButton.setToolTipText("Generate a new Avalanche mnemonic phrase");
+        helperButton.setToolTipText("Open the mnemonic phrase in AVAX Wallet Helper");
+        copyButton.setToolTipText("Copy the mnemonic phrase to system clipboard. Make sure to clear ASAP.");
+        clearButton.setToolTipText("Clear the mnemonic phrase from system clipboard and visible textbox. Cannot be undone.");
 
 
-        jb.addActionListener(e -> {
+        generateButton.addActionListener(e -> {
             var mnm = WalletFunctions.generateMnemonic();
-            jtf.setText(String.join(" ", mnm));
-            jb2.setEnabled(true);
-            jb3.setEnabled(true);
-            jb4.setEnabled(true);
-            statusBar.setText("Save mnemonic immediately. IT WILL NOT BE SHOWN AGAIN.");
+            if (mnm != null) {
+                jtf.setText(String.join(" ", mnm));
+                helperButton.setEnabled(true);
+                copyButton.setEnabled(true);
+                clearButton.setEnabled(true);
+                statusBar.setText("Save mnemonic immediately. IT WILL NOT BE SHOWN AGAIN.");
+            } else {
+                throw new RuntimeException("Null mnemonic returned. Please notify developers about this error.");
+            }
         });
 
-        jb2.addActionListener(e -> {
-           new AvaxtoWalletPanel(tf, jtf.getText());
+        helperButton.addActionListener(e -> {
+            AvaxtoWalletPanel awp = new AvaxtoWalletPanel(tf, jtf.getText());
+            getMainFrame().getMainPane().add(awp, "Wallet");
+            getMainFrame().getMainPane().setSelectedComponent(awp);
         });
 
-        jb3.addActionListener(e -> {
+        copyButton.addActionListener(e -> {
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(jtf.getText()), null);
             statusBar.setText("Mnemonic copied. Save it immediately and clear clipboard.");
         });
 
-        jb4.addActionListener(e -> {
+        clearButton.addActionListener(e -> {
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(""), null);
             jtf.setText("");
-            jb2.setEnabled(false);
-            jb3.setEnabled(false);
-            jb4.setEnabled(false);
+            helperButton.setEnabled(false);
+            copyButton.setEnabled(false);
+            clearButton.setEnabled(false);
             statusBar.setText("Clipboard and visible phrase cleared.");
         });
 
-        buttonsPanel.add(jb);
-        buttonsPanel.add(jb3);
-        buttonsPanel.add(jb2);
-        buttonsPanel.add(jb4);
+        buttonsPanel.add(generateButton);
+        buttonsPanel.add(copyButton);
+        buttonsPanel.add(helperButton);
+        buttonsPanel.add(clearButton);
 
         add(buttonsPanel, BorderLayout.NORTH);
 

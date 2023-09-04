@@ -17,24 +17,24 @@ import javax.swing.*;
 
 public class AvaxtoWalletMainMenu extends JMenuBar {
 
-    AvaxtoWalletPanel mainFrame;
+    AvaxtoWalletPanel walletPanel;
     public AvaxtoWalletMainMenu(AvaxtoWalletPanel fj) {
-        this.mainFrame = fj;
+        this.walletPanel = fj;
         JMenu mainMenu = new JMenu("Wallet");
         JMenuItem jmiXAddresses = new JMenuItem("X Addresses");
         JMenuItem jmiPAddresses = new JMenuItem("P Addresses");
         JMenuItem jmiClose = new JMenuItem("Close");
 
         jmiXAddresses.addActionListener(x -> {
-            mainFrame.listXAddresses();
+            walletPanel.listXAddresses();
         });
 
         jmiPAddresses.addActionListener(x -> {
-            mainFrame.listPAddresses();
+            walletPanel.listPAddresses();
         });
 
         jmiClose.addActionListener(x -> {
-            mainFrame.getMainFrame().remove(fj);
+            walletPanel.getMainFrame().getMainPane().remove(this.walletPanel);
         });
 
         mainMenu.add(jmiXAddresses);

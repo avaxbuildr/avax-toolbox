@@ -27,7 +27,7 @@ import java.net.URI;
 
 public class ToolboxMainMenu extends FileExitJMenuBar {
 
-    private ToolboxFrame mainFrame;
+    final private ToolboxFrame mainFrame;
     private ValidatorToolPanel validatorToolPanel;
 
     public void disposeValidatorPanel() {
@@ -94,6 +94,7 @@ public class ToolboxMainMenu extends FileExitJMenuBar {
         helpAboutMenuItem.addActionListener(e -> {
             AboutPanel ap = new AboutPanel(mainFrame);
             mainFrame.getMainPane().add(ap,"About AVAX Toolbox");
+            mainFrame.getMainPane().setSelectedComponent(ap);
         });
         helpMenu.add(helpAboutMenuItem);
 
