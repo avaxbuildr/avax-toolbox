@@ -56,10 +56,11 @@ public class ValidatorToolPanel extends AvaxtoPanel {
             table = new ValidatorsTable(validators);
             JScrollPane jsp = new JScrollPane(table);
             add(jsp, BorderLayout.CENTER);
-
+            tf.repaint();
         }).start();
 
         setVisible(true);
+
     }
 
     public ValidatorsTable getTable() {
