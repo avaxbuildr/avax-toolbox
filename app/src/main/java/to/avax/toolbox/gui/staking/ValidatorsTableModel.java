@@ -14,6 +14,7 @@
 package to.avax.toolbox.gui.staking;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.val;
 import to.avax.avalanche.apis.platformvm.dto.ValidatorDTO;
 import to.avax.avalanche.apis.platformvm.dto.ValidatorsDTO;
@@ -28,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.TimeZone;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class ValidatorsTableModel extends AbstractTableModel {
     ValidatorsDTO validators;
 
@@ -108,9 +110,14 @@ public class ValidatorsTableModel extends AbstractTableModel {
                 return NumberUtils.bigToLocaleString(new BigDecimal( NumberUtils.bnToAvaxX(row.getDelegatorWeight())), 2);
             }
             case 8 -> {
-                BigInteger freeAmount = new BigInteger("3000000").multiply(Constants.ONEAVAX);
-                BigDecimal bd = new BigDecimal(freeAmount.subtract(row.getWeight().add(row.getDelegatorWeight())));
-                return  NumberUtils.bigToLocaleString(bd.divide(new BigDecimal(Constants.ONEAVAX)), 2);
+
+                String myWeightStr = NumberUtils.bnToAvaxX(row.getWeight());
+                System.out.println(myWeightStr);
+                BigDecimal myWeight = new BigDecimal(myWeightStr);
+                BigDecimal maxWeight = myWeight.multiply(new BigDecimal(Constants.ONEAVAX)).multiply(new BigDecimal("4"));
+                BigDecimal spentWeight = new BigDecimal( row.getWeight().add(row.getDelegatorWeight()));
+                BigDecimal bd = maxWeight.subtract(spentWeight);
+                return  bd.divide(new BigDecimal(Constants.ONEAVAX)).toBigInteger();
             }
             default -> {
                 return "N/A";

@@ -13,7 +13,7 @@ public class ValidatorCellRenderer extends DefaultTableCellRenderer {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         if (column == 1) {
-            float uptime = (Float)value;
+            double uptime = (Double)value;
             if (uptime < 80) {
                 c.setBackground(Color.RED);
             }
