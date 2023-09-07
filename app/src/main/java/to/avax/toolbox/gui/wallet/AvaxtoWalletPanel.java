@@ -104,11 +104,13 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         jmb = new AvaxtoWalletMainMenu(this);
         add(jmb, BorderLayout.NORTH);
 
+        JPanel unloggedInternalPanel = new JPanel();
         unloggedPanel = new JPanel();
+        unloggedPanel.setLayout(new BorderLayout());
 
         JLabel jpjl = new JLabel("Enter mnemonic");
-        JTextArea jpjta = new JTextArea(3, 30);
-        JButton jpbut = new JButton("Go");
+        JTextArea jpjta = new JTextArea(3, 60);
+        JButton jpbut = new JButton("Go >>");
 
         jpbut.addActionListener( e -> {
 
@@ -124,9 +126,11 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
             activateWalletPane();
         });
 
-        unloggedPanel.add(jpjl);
-        unloggedPanel.add(jpjta);
-        unloggedPanel.add(jpbut);
+        unloggedInternalPanel.add(jpjl);
+        unloggedInternalPanel.add(jpjta);
+        unloggedInternalPanel.add(jpbut);
+
+        unloggedPanel.add(unloggedInternalPanel, BorderLayout.LINE_START);
 
         xAddressesTextArea = new JTextArea();
         pAddressesTextArea = new JTextArea();
@@ -145,6 +149,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
 
         JButton xAddrNextButton = new JButton(">>");
         JButton xAddrPrevButton = new JButton("<<");
+
         JButton pAddrNextButton = new JButton(">>");
         JButton pAddrPrevButton = new JButton("<<");
 
@@ -161,7 +166,6 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
 
         xAddressesPanel.setLayout(new BorderLayout());
         pAddressesPanel.setLayout(new BorderLayout());
-
 
         xAddressesPanel.add(xAddressesButtonPanel, BorderLayout.NORTH);
         pAddressesPanel.add(pAddressesButtonPanel, BorderLayout.NORTH);
