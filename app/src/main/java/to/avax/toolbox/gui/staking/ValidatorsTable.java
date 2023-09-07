@@ -26,6 +26,7 @@ public class ValidatorsTable extends JTable {
     ValidatorsTableModel vtModel;
     public ValidatorsTable(ValidatorsDTO validators) {
         super(new ValidatorsTableModel(validators));
+
         this.validators = validators;
         vtModel = (ValidatorsTableModel)getModel();
         setAutoCreateRowSorter(true);
@@ -39,8 +40,4 @@ public class ValidatorsTable extends JTable {
         }
     }
 
-    public void refresh(ValidatorsDTO validators) {
-        this.validators = validators;
-        // TODO refresh table
-    }
 }

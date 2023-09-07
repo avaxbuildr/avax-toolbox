@@ -1,4 +1,4 @@
-# AVAX.TOolbox
+# AVAX Toolbox
 
 Read our [introduction to AVAX Toolbox here](https://crypto.bi/avax-toolbox/)
 

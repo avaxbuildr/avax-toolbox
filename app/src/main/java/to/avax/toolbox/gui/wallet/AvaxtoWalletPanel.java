@@ -47,7 +47,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         }
         pAddressesTextArea.setText(sb.toString());
         centralPanel.removeAll();
-        centralPanel.add(pAddressesPanel);
+        centralPanel.add(pAddressesPanel, BorderLayout.CENTER);
         centralPanel.revalidate();
     }
 
@@ -62,7 +62,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         }
         xAddressesTextArea.setText(sb.toString());
         centralPanel.removeAll();
-        centralPanel.add(xAddressesPanel);
+        centralPanel.add(xAddressesPanel, BorderLayout.CENTER);
         centralPanel.revalidate();
     }
 
@@ -77,11 +77,13 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         setLayout(new BorderLayout());
 
         centralPanel = new JPanel();
+        centralPanel.setLayout(new BorderLayout());
 
         jmb = new AvaxtoWalletMainMenu(this);
         add(jmb, BorderLayout.NORTH);
 
         unloggedPanel = new JPanel();
+
         JLabel jpjl = new JLabel("Enter mnemonic");
         JTextArea jpjta = new JTextArea(3, 30);
         JButton jpbut = new JButton("Go");
@@ -106,25 +108,29 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
 
         xAddressesTextArea = new JTextArea();
         pAddressesTextArea = new JTextArea();
+
         JScrollPane jspx = new JScrollPane(xAddressesTextArea);
         JScrollPane jspp = new JScrollPane(pAddressesTextArea);
+
         xAddressesPanel = new JPanel();
         pAddressesPanel = new JPanel();
 
-        xAddressesPanel.add(jspx);
-        pAddressesPanel.add(jspp);
+        xAddressesPanel.setLayout(new BorderLayout());
+        pAddressesPanel.setLayout(new BorderLayout());
 
-        centralPanel.add(unloggedPanel);
+        xAddressesPanel.add(jspx, BorderLayout.CENTER);
+        pAddressesPanel.add(jspp, BorderLayout.CENTER);
+
+        centralPanel.add(unloggedPanel, BorderLayout.CENTER);
         add(centralPanel, BorderLayout.CENTER);
 
         statusLabel = new JLabel("Wallet login.");
         add(statusLabel, BorderLayout.SOUTH);
 
-        setVisible(true);
-
     }
+
     /**
-    * Construct a new MnemonicWallet helper
+     * Construct a new MnemonicWallet helper
      * */
     public AvaxtoWalletPanel(ToolboxFrame tf, String mnemonic) {
         this(tf);

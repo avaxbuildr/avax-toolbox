@@ -42,7 +42,7 @@ public class AvaxToolbox {
 
         mainPane = new JTabbedPane();
 
-        mainFrame = new ToolboxFrame("AVAX.TO olbox", mainPane);
+        mainFrame = new ToolboxFrame("AVAX Toolbox", mainPane);
 
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

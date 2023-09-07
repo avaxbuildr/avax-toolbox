@@ -31,7 +31,7 @@ public class WalletGeneratorPanel extends AvaxtoPanel {
         BorderLayout gbl = new BorderLayout();
         setLayout(gbl);
 
-        JTextArea jtf = new JTextArea(4, 35);
+        JTextArea jtf = new JTextArea();
         jtf.setLineWrap(true);
         jtf.setBorder(new EmptyBorder(3,3,3,3));
         add(jtf, BorderLayout.CENTER);
