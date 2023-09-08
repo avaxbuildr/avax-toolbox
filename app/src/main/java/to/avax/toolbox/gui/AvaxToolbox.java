@@ -111,16 +111,15 @@ public class AvaxToolbox {
         keyManager.addKeyEventDispatcher(e -> {
             if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_W && e.isControlDown()) {
                 if (getMainPane().getTabCount() == 0) {
-                    int confirmation = JOptionPane.showConfirmDialog(null,
-                            "Exit AVAX Toolbox?", "Confirm Exit",JOptionPane.YES_NO_CANCEL_OPTION);
+                    int confirmation = JOptionPane.showConfirmDialog(null, "Exit AVAX Toolbox?", "Confirm Exit",JOptionPane.YES_NO_CANCEL_OPTION);
 
                     if (confirmation == JOptionPane.YES_OPTION) {
                         System.exit(0);
                     }
                 }
                 getMainPane().remove(getMainPane().getSelectedComponent());
-
             }
+
             return false;
         });
     }

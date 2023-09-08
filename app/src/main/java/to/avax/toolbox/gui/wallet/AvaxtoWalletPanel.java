@@ -15,6 +15,7 @@ package to.avax.toolbox.gui.wallet;
 
 import to.avax.avalanche.wallet.HdHelper;
 import to.avax.avalanche.wallet.HdWalletCore;
+import to.avax.avalanche.wallet.MnemonicPhrase;
 import to.avax.avalanche.wallet.MnemonicWallet;
 import to.avax.toolbox.gui.AvaxtoPanel;
 import to.avax.toolbox.gui.ToolboxFrame;
@@ -25,7 +26,7 @@ import java.awt.*;
 public class AvaxtoWalletPanel extends AvaxtoPanel {
 
     JLabel statusLabel;
-    private String mnemonic;
+    private MnemonicPhrase mnemonic;
     final private JPanel centralPanel;
     JPanel unloggedPanel;
     HdWalletCore wallet;
@@ -36,7 +37,8 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     JPanel pAddressesButtonPanel;
     JTextArea xAddressesTextArea;
     JTextArea pAddressesTextArea;
-
+    JLabel xAddrPageLabel;
+    JLabel pAddrPageLabel;
     private int currentXPage;
     private int currentPPage;
 
@@ -44,7 +46,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     AvaxtoWalletMainMenu jmb;
 
     public void listPAddresses() {
-        listPAddresses(0, DEFAULT_ADDRESS_COUNT);
+        listPAddresses(currentPPage, DEFAULT_ADDRESS_COUNT);
     }
 
     public void listPAddresses(int page, int addressCount) {
@@ -59,6 +61,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
             sb.append(address);
             sb.append("\n");
         }
+        pAddrPageLabel.setText(String.valueOf(currentPPage + 1));
         pAddressesTextArea.setText(sb.toString());
         centralPanel.removeAll();
         centralPanel.add(pAddressesPanel, BorderLayout.CENTER);
@@ -66,19 +69,23 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     }
 
     public void listXAddresses() {
-        listPAddresses(0, DEFAULT_ADDRESS_COUNT);
+        listXAddresses(currentXPage, DEFAULT_ADDRESS_COUNT);
     }
     public void listXAddresses(int page, int addressCount) {
+
         int index = (page * addressCount);
         int lastIndex = index + addressCount;
         xAddressesTextArea.setText("");
         StringBuilder sb = new StringBuilder();
         HdHelper hdh = wallet.getExternalHelper();
+
         for (; index<lastIndex; index++) {
             String address = hdh.getAddressForIndex(index);
             sb.append(address);
             sb.append("\n");
         }
+
+        xAddrPageLabel.setText(String.valueOf(currentXPage + 1));
         xAddressesTextArea.setText(sb.toString());
         centralPanel.removeAll();
         centralPanel.add(xAddressesPanel, BorderLayout.CENTER);
@@ -119,8 +126,8 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
                 return;
             }
 
-            this.mnemonic = jpjta.getText();
-            this.wallet = new MnemonicWallet(this.mnemonic);
+            this.mnemonic = new MnemonicPhrase(jpjta.getText());
+            this.wallet = new MnemonicWallet(this.mnemonic.getValue());
 
             unloggedPanel.setVisible(false);
             activateWalletPane();
@@ -153,8 +160,8 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         JButton pAddrNextButton = new JButton(">>");
         JButton pAddrPrevButton = new JButton("<<");
 
-        JLabel xAddrPageLabel = new JLabel("1");
-        JLabel pAddrPageLabel = new JLabel("1");
+        xAddrPageLabel = new JLabel("1");
+        pAddrPageLabel = new JLabel("1");
 
         xAddressesButtonPanel.add(xAddrPrevButton);
         xAddressesButtonPanel.add(xAddrPageLabel);
@@ -191,7 +198,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
             if (currentXPage > 0) {
                 currentXPage--;
             }
-            listXAddresses(currentPPage, DEFAULT_ADDRESS_COUNT);
+            listXAddresses(currentXPage, DEFAULT_ADDRESS_COUNT);
             xAddrPageLabel.setText(String.valueOf(currentXPage + 1));
 
         });
@@ -227,8 +234,8 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
             return;
         }
 
-        this.mnemonic = mnemonic;
-        this.wallet = new MnemonicWallet(this.mnemonic);
+        this.mnemonic = new MnemonicPhrase(mnemonic);
+        this.wallet = new MnemonicWallet(this.mnemonic.getValue());
 
         activateWalletPane();
     }
