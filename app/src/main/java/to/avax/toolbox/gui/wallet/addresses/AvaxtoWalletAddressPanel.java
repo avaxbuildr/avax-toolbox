@@ -1,5 +1,6 @@
 package to.avax.toolbox.gui.wallet.addresses;
 
+import to.avax.avalanche.wallet.HdHelper;
 import to.avax.toolbox.gui.wallet.AvaxtoWalletPanel;
 
 import javax.swing.*;
@@ -12,14 +13,15 @@ public class AvaxtoWalletAddressPanel extends JPanel {
     private int currentPage;
     JLabel addrPageLabel;
     int addressCountPerPage;
-    AvaxtoWalletAddressGenerator generator;
+    HdHelper hdHelper;
     private final static int DEFAULT_ADDRESS_COUNT = 20;
 
-    public AvaxtoWalletAddressPanel(AvaxtoWalletPanel parent, int perPage, AvaxtoWalletAddressGenerator awag) {
+    public AvaxtoWalletAddressPanel(AvaxtoWalletPanel parent, int perPage, HdHelper hdh) {
         super();
+
         this.addressCountPerPage = perPage;
         this.parent = parent;
-        this.generator = awag;
+        this.hdHelper = hdh;
         setLayout(new BorderLayout());
         addressesTextArea = new JTextArea();
         currentPage = 0;
@@ -59,9 +61,19 @@ public class AvaxtoWalletAddressPanel extends JPanel {
     }
 
     public void listAddresses(int page, int addressCount) {
+        int index = (page * addressCount);
+        int lastIndex = index + addressCount;
+
         addressesTextArea.setText("");
-        String addresses = generator.listAddresses(page, addressCount);
-        addrPageLabel.setText(String.valueOf(currentPage + 1));
-        addressesTextArea.setText(addresses);
+
+        StringBuilder sb = new StringBuilder();
+        for (; index<lastIndex; index++) {
+            String address = hdHelper.getAddressForIndex(index);
+            sb.append(address);
+            sb.append("\n");
+        }
+
+        addrPageLabel.setText(String.valueOf(page + 1));
+        addressesTextArea.setText(sb.toString());
     }
 }

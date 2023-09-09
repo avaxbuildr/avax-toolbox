@@ -13,7 +13,6 @@
  **/
 package to.avax.toolbox.gui.wallet;
 
-import to.avax.avalanche.wallet.HdHelper;
 import to.avax.avalanche.wallet.HdWalletCore;
 import to.avax.avalanche.wallet.MnemonicPhrase;
 import to.avax.avalanche.wallet.MnemonicWallet;
@@ -57,6 +56,15 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
         centralPanel.add(new JPanel());
         statusLabel.setText("Wallet ready");
     }
+
+    private void initFromMnemonic(String mnm) {
+        this.mnemonic = new MnemonicPhrase(mnm);
+        this.wallet = new MnemonicWallet(this.mnemonic.getValue());
+
+        xAddressesPanel = new AvaxtoWalletAddressPanel(this, DEFAULT_ADDRESS_COUNT, wallet.getExternalHelper());
+        pAddressesPanel = new AvaxtoWalletAddressPanel(this, DEFAULT_ADDRESS_COUNT, wallet.getPlatformHelper());
+    }
+
     public AvaxtoWalletPanel(ToolboxFrame tf) {
         super(tf);
         setLayout(new BorderLayout());
@@ -82,10 +90,9 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
                 return;
             }
 
-            this.mnemonic = new MnemonicPhrase(jpjta.getText());
-            this.wallet = new MnemonicWallet(this.mnemonic.getValue());
-
             unloggedPanel.setVisible(false);
+
+            initFromMnemonic(jpjta.getText());
             activateWalletPane();
         });
 
@@ -95,44 +102,11 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
 
         unloggedPanel.add(unloggedInternalPanel, BorderLayout.LINE_START);
 
-        xAddressesPanel = new AvaxtoWalletAddressPanel(this, DEFAULT_ADDRESS_COUNT, (page, addressCount) -> {
-            int index = (page * addressCount);
-            int lastIndex = index + addressCount;
-
-            StringBuilder sb = new StringBuilder();
-            HdHelper hdh = wallet.getExternalHelper();
-
-            for (; index<lastIndex; index++) {
-                String address = hdh.getAddressForIndex(index);
-                sb.append(address);
-                sb.append("\n");
-            }
-
-            return sb.toString();
-        });
-
-        pAddressesPanel = new AvaxtoWalletAddressPanel(this, DEFAULT_ADDRESS_COUNT, (page, addressCount) -> {
-            int index = (page * addressCount);
-            int lastIndex = index + addressCount;
-
-            StringBuilder sb = new StringBuilder();
-            HdHelper hdh = wallet.getPlatformHelper();
-            for (; index<lastIndex; index++) {
-                String address = hdh.getAddressForIndex(index);
-                sb.append(address);
-                sb.append("\n");
-            }
-
-            return sb.toString();
-        });
-
-
         centralPanel.add(unloggedPanel, BorderLayout.CENTER);
         add(centralPanel, BorderLayout.CENTER);
 
         statusLabel = new JLabel("Wallet login.");
         add(statusLabel, BorderLayout.SOUTH);
-
 
     }
 
@@ -148,9 +122,7 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
             return;
         }
 
-        this.mnemonic = new MnemonicPhrase(mnemonic);
-        this.wallet = new MnemonicWallet(this.mnemonic.getValue());
-
+        initFromMnemonic(mnemonic);
         activateWalletPane();
     }
 }
