@@ -19,6 +19,7 @@ import to.avax.avalanche.wallet.MnemonicPhrase;
 import to.avax.avalanche.wallet.MnemonicWallet;
 import to.avax.toolbox.gui.AvaxtoPanel;
 import to.avax.toolbox.gui.ToolboxFrame;
+import to.avax.toolbox.gui.wallet.addresses.AvaxtoWalletAddressPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,63 +31,21 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     final private JPanel centralPanel;
     JPanel unloggedPanel;
     HdWalletCore wallet;
-    JPanel xAddressesPanel;
-    JPanel pAddressesPanel;
-
-    JPanel xAddressesButtonPanel;
-    JPanel pAddressesButtonPanel;
-    JTextArea xAddressesTextArea;
-    JTextArea pAddressesTextArea;
-    JLabel xAddrPageLabel;
-    JLabel pAddrPageLabel;
-    private int currentXPage;
-    private int currentPPage;
+    AvaxtoWalletAddressPanel xAddressesPanel;
+    AvaxtoWalletAddressPanel pAddressesPanel;
 
     private final static int DEFAULT_ADDRESS_COUNT = 20;
     AvaxtoWalletMainMenu jmb;
 
     public void listPAddresses() {
-        listPAddresses(currentPPage, DEFAULT_ADDRESS_COUNT);
-    }
-
-    public void listPAddresses(int page, int addressCount) {
-        int index = (page * addressCount);
-        int lastIndex = index + addressCount;
-
-        pAddressesTextArea.setText("");
-        StringBuilder sb = new StringBuilder();
-        HdHelper hdh = wallet.getPlatformHelper();
-        for (; index<lastIndex; index++) {
-            String address = hdh.getAddressForIndex(index);
-            sb.append(address);
-            sb.append("\n");
-        }
-        pAddrPageLabel.setText(String.valueOf(currentPPage + 1));
-        pAddressesTextArea.setText(sb.toString());
+        pAddressesPanel.listAddresses();
         centralPanel.removeAll();
         centralPanel.add(pAddressesPanel, BorderLayout.CENTER);
         centralPanel.revalidate();
     }
 
     public void listXAddresses() {
-        listXAddresses(currentXPage, DEFAULT_ADDRESS_COUNT);
-    }
-    public void listXAddresses(int page, int addressCount) {
-
-        int index = (page * addressCount);
-        int lastIndex = index + addressCount;
-        xAddressesTextArea.setText("");
-        StringBuilder sb = new StringBuilder();
-        HdHelper hdh = wallet.getExternalHelper();
-
-        for (; index<lastIndex; index++) {
-            String address = hdh.getAddressForIndex(index);
-            sb.append(address);
-            sb.append("\n");
-        }
-
-        xAddrPageLabel.setText(String.valueOf(currentXPage + 1));
-        xAddressesTextArea.setText(sb.toString());
+        xAddressesPanel.listAddresses();
         centralPanel.removeAll();
         centralPanel.add(xAddressesPanel, BorderLayout.CENTER);
         centralPanel.revalidate();
@@ -101,9 +60,6 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
     public AvaxtoWalletPanel(ToolboxFrame tf) {
         super(tf);
         setLayout(new BorderLayout());
-
-        currentPPage = 0;
-        currentXPage = 0;
 
         centralPanel = new JPanel();
         centralPanel.setLayout(new BorderLayout());
@@ -139,85 +95,43 @@ public class AvaxtoWalletPanel extends AvaxtoPanel {
 
         unloggedPanel.add(unloggedInternalPanel, BorderLayout.LINE_START);
 
-        xAddressesTextArea = new JTextArea();
-        pAddressesTextArea = new JTextArea();
+        xAddressesPanel = new AvaxtoWalletAddressPanel(this, DEFAULT_ADDRESS_COUNT, (page, addressCount) -> {
+            int index = (page * addressCount);
+            int lastIndex = index + addressCount;
 
-        JScrollPane jspx = new JScrollPane(xAddressesTextArea);
-        JScrollPane jspp = new JScrollPane(pAddressesTextArea);
+            StringBuilder sb = new StringBuilder();
+            HdHelper hdh = wallet.getExternalHelper();
 
-        xAddressesPanel = new JPanel();
-        pAddressesPanel = new JPanel();
+            for (; index<lastIndex; index++) {
+                String address = hdh.getAddressForIndex(index);
+                sb.append(address);
+                sb.append("\n");
+            }
 
-        xAddressesButtonPanel = new JPanel();
-        pAddressesButtonPanel = new JPanel();
+            return sb.toString();
+        });
 
-        ((FlowLayout)xAddressesButtonPanel.getLayout()).setAlignment(FlowLayout.LEFT);
-        ((FlowLayout)pAddressesButtonPanel.getLayout()).setAlignment(FlowLayout.LEFT);
+        pAddressesPanel = new AvaxtoWalletAddressPanel(this, DEFAULT_ADDRESS_COUNT, (page, addressCount) -> {
+            int index = (page * addressCount);
+            int lastIndex = index + addressCount;
 
-        JButton xAddrNextButton = new JButton(">>");
-        JButton xAddrPrevButton = new JButton("<<");
+            StringBuilder sb = new StringBuilder();
+            HdHelper hdh = wallet.getPlatformHelper();
+            for (; index<lastIndex; index++) {
+                String address = hdh.getAddressForIndex(index);
+                sb.append(address);
+                sb.append("\n");
+            }
 
-        JButton pAddrNextButton = new JButton(">>");
-        JButton pAddrPrevButton = new JButton("<<");
+            return sb.toString();
+        });
 
-        xAddrPageLabel = new JLabel("1");
-        pAddrPageLabel = new JLabel("1");
-
-        xAddressesButtonPanel.add(xAddrPrevButton);
-        xAddressesButtonPanel.add(xAddrPageLabel);
-        xAddressesButtonPanel.add(xAddrNextButton);
-
-        pAddressesButtonPanel.add(pAddrPrevButton);
-        pAddressesButtonPanel.add(pAddrPageLabel);
-        pAddressesButtonPanel.add(pAddrNextButton);
-
-        xAddressesPanel.setLayout(new BorderLayout());
-        pAddressesPanel.setLayout(new BorderLayout());
-
-        xAddressesPanel.add(xAddressesButtonPanel, BorderLayout.NORTH);
-        pAddressesPanel.add(pAddressesButtonPanel, BorderLayout.NORTH);
-
-        xAddressesPanel.add(jspx, BorderLayout.CENTER);
-        pAddressesPanel.add(jspp, BorderLayout.CENTER);
 
         centralPanel.add(unloggedPanel, BorderLayout.CENTER);
         add(centralPanel, BorderLayout.CENTER);
 
         statusLabel = new JLabel("Wallet login.");
         add(statusLabel, BorderLayout.SOUTH);
-
-        // ---------- Button Handlers ------------------
-
-        xAddrNextButton.addActionListener( e -> {
-            currentXPage++;
-            listXAddresses(currentXPage, DEFAULT_ADDRESS_COUNT);
-            xAddrPageLabel.setText(String.valueOf(currentXPage + 1));
-        });
-
-        xAddrPrevButton.addActionListener( e -> {
-            if (currentXPage > 0) {
-                currentXPage--;
-            }
-            listXAddresses(currentXPage, DEFAULT_ADDRESS_COUNT);
-            xAddrPageLabel.setText(String.valueOf(currentXPage + 1));
-
-        });
-
-        pAddrNextButton.addActionListener( e -> {
-            currentPPage++;
-            listPAddresses(currentPPage, DEFAULT_ADDRESS_COUNT);
-            pAddrPageLabel.setText(String.valueOf(currentPPage + 1));
-
-        });
-
-        pAddrPrevButton.addActionListener( e -> {
-            if (currentPPage > 0) {
-                currentPPage--;
-            }
-            listPAddresses(currentPPage, DEFAULT_ADDRESS_COUNT);
-            pAddrPageLabel.setText(String.valueOf(currentPPage + 1));
-
-        });
 
 
     }
