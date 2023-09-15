@@ -1,13 +1,11 @@
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
+ * Copyright (C) 2023 @REKTBuildr
  *
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
  *
  *
  **/
@@ -15,12 +13,10 @@ package to.avax.toolbox.gui.staking;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.val;
 import to.avax.avalanche.apis.platformvm.dto.ValidatorDTO;
 import to.avax.avalanche.apis.platformvm.dto.ValidatorsDTO;
 import to.avax.avalanche.utils.Constants;
 import to.avax.avalanche.utils.NumberUtils;
-
 import javax.swing.table.AbstractTableModel;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -87,15 +83,13 @@ public class ValidatorsTableModel extends AbstractTableModel {
             }
             case 2 -> {
                 long uTimestamp = row.getStartTime() * 1000;
-                LocalDateTime localDateTime =  LocalDateTime.ofInstant(Instant.ofEpochMilli(uTimestamp),
+                return  LocalDateTime.ofInstant(Instant.ofEpochMilli(uTimestamp),
                                 TimeZone.getDefault().toZoneId());
-                return localDateTime;
             }
             case 3 -> {
                 long uTimestamp = row.getEndTime() * 1000;
-                LocalDateTime localDateTime =  LocalDateTime.ofInstant(Instant.ofEpochMilli(uTimestamp),
+                return  LocalDateTime.ofInstant(Instant.ofEpochMilli(uTimestamp),
                         TimeZone.getDefault().toZoneId());
-                return localDateTime;
             }
             case 4 -> {
                 return row.getDelegationFee();

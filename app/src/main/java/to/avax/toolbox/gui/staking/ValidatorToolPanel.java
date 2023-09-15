@@ -1,13 +1,11 @@
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
+ * Copyright (C) 2023 @REKTBuildr
  *
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
  *
  *
  **/
@@ -24,7 +22,7 @@ import to.avax.toolbox.gui.common.ToolboxStatusBar;
 import javax.swing.*;
 import java.awt.*;
 
-import static to.avax.avalanche.wallet.store.modules.network.NetworkConstants.MainnetConfig;
+import static to.avax.avalanche.AvaNetwork.MainnetConfig;
 
 public class ValidatorToolPanel extends AvaxtoPanel {
     static ToolboxStatusBar statusBar;

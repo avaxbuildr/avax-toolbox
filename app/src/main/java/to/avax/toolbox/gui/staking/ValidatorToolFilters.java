@@ -1,13 +1,11 @@
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
+ * Copyright (C) 2023 @REKTBuildr
  *
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
  *
  *
  **/
@@ -45,7 +43,7 @@ public class ValidatorToolFilters extends JPanel {
         JButton jb3 = new JButton("Apply Filters");
 
         jb3.addActionListener(e -> {
-            final RowFilter<ValidatorsTableModel, Integer> filter = new RowFilter<ValidatorsTableModel, Integer>() {
+            final RowFilter<ValidatorsTableModel, Integer> filter = new RowFilter<>() {
                 @Override
                 public boolean include(RowFilter.Entry<? extends ValidatorsTableModel, ? extends Integer> entry) {
                     double minUptime = Double.parseDouble(minUptimeTextField.getText());
@@ -57,7 +55,7 @@ public class ValidatorToolFilters extends JPanel {
                 }
             };
 
-            final TableRowSorter<ValidatorsTableModel> sorter = new TableRowSorter<ValidatorsTableModel>((ValidatorsTableModel)validatorsFrame.getTable().getModel());
+            final TableRowSorter<ValidatorsTableModel> sorter = new TableRowSorter<>((ValidatorsTableModel)validatorsFrame.getTable().getModel());
 
             sorter.setRowFilter(filter);
             validatorsFrame.getTable().setRowSorter(sorter);

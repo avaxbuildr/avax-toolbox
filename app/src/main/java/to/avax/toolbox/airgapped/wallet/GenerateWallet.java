@@ -1,13 +1,11 @@
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
+ * Copyright (C) 2023 @REKTBuildr
  *
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
  *
  *
  **/
@@ -21,6 +19,10 @@ import to.avax.avalanche.wallet.WalletFunctions;
 public class GenerateWallet {
     public static void main(String[] args) {
         var mnm = WalletFunctions.generateMnemonic();
-        System.out.println(String.join(" ", mnm));
+        if (mnm != null) {
+            System.out.println(String.join(" ", mnm));
+            return;
+        }
+        System.err.println("ERROR generating wallet. This might be a bug. Report at https://crypto.bi/forum/");
     }
 }

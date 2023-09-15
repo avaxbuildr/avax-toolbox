@@ -1,9 +1,17 @@
+/*
+ *
+ * AVAX Toolbox - An Avalanche Toolbox
+ * Copyright (C) 2023 @REKTBuildr
+ *
+ *
+ * For more information, visit:
+ * https://crypto.bi
+ *
+ *
+ **/
 package to.avax.toolbox.gui;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
 
 public class AvaxtoPanel extends JPanel {
 

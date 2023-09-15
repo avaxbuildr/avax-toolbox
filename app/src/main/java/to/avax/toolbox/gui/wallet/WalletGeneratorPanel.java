@@ -1,14 +1,10 @@
-
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
- *
+ * Copyright (C) 2023 @REKTBuildr
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
  *
  *
  **/

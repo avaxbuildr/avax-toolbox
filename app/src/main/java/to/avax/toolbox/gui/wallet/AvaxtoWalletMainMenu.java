@@ -1,14 +1,10 @@
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
- *
+ * Copyright (C) 2023 @REKTBuildr
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
- *
  *
  **/
 package to.avax.toolbox.gui.wallet;
@@ -25,17 +21,9 @@ public class AvaxtoWalletMainMenu extends JMenuBar {
         JMenuItem jmiPAddresses = new JMenuItem("P Addresses");
         JMenuItem jmiClose = new JMenuItem("Close");
 
-        jmiXAddresses.addActionListener(x -> {
-            walletPanel.listXAddresses();
-        });
-
-        jmiPAddresses.addActionListener(x -> {
-            walletPanel.listPAddresses();
-        });
-
-        jmiClose.addActionListener(x -> {
-            walletPanel.getMainFrame().getMainPane().remove(this.walletPanel);
-        });
+        jmiXAddresses.addActionListener(x -> walletPanel.listXAddresses());
+        jmiPAddresses.addActionListener(x -> walletPanel.listPAddresses());
+        jmiClose.addActionListener(x -> walletPanel.getMainFrame().getMainPane().remove(this.walletPanel));
 
         mainMenu.add(jmiXAddresses);
         mainMenu.add(jmiPAddresses);

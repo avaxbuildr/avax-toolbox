@@ -1,19 +1,17 @@
 /*
  *
  * AVAX Toolbox - An Avalanche Toolbox
- * Copyright (C) 2023 AVAX Buildr @avaxbuildr
+ * Copyright (C) 2023 @REKTBuildr
  *
  *
  * For more information, visit:
  * https://crypto.bi
- * https://avax.to
- * https://twitter.com/avaxbuildr
  *
  *
  **/
 package to.avax.toolbox.airgapped.wallet;
 
-import to.avax.avalanche.apis.avm.AvmKeyPair;
+import to.avax.avalanche.apis.avm.keychain.KeyPair;
 import to.avax.avalanche.utils.Bintools;
 import to.avax.avalanche.wallet.Types;
 
@@ -33,11 +31,13 @@ public class AddressFromPublicKey {
     };
 
     public static void main(String[] args) {
+
         byte[] bKey = new byte[key.length];
         for (int i=0; i<key.length; i++) {
             bKey[i] = (byte) (key[i] & 0xff);
         }
-        var addr = AvmKeyPair.addressFromPublicKey(bKey);
+
+        var addr = KeyPair.addressFromPublicKey(bKey);
         String strAddr = Bintools.addressToString("avax", Types.ChainAlias.X, addr);
         System.out.println(strAddr);
     }
