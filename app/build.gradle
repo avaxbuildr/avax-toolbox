@@ -58,6 +58,11 @@ task walletaddresses(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task testaddresses(type: JavaExec) {
+    mainClass = "to.avax.toolbox.airgapped.wallet.TestAddresses"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task listvalidators(type: JavaExec) {
     mainClass = "to.avax.toolbox.networked.staking.ListValidators"
     classpath = sourceSets.main.runtimeClasspath
