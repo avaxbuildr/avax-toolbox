@@ -41,7 +41,7 @@ dependencies {
 
 application {
     logging.captureStandardOutput LogLevel.QUIET
-    mainClass = 'to.avax.stuff.airgapped.wallet.GenerateWallet'
+    mainClass = 'to.avax.toolbox.airgapped.wallet.GenerateWallet'
 }
 
 sourceCompatibility = 19
