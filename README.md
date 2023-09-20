@@ -1,13 +1,15 @@
 # AVAX Toolbox
 
-Read our [introduction to AVAX Toolbox here](https://crypto.bi/avax-toolbox/)
+Read the [introduction to AVAX Toolbox](https://crypto.bi/avax-toolbox/)
 
 ## Documentation
 
-Visit [my crypto.bi author page](https://crypto.bi/author/rektbuildr/) for avalanche-java related stuff.
+For support and documentation visit [Crypto.bi](https://crypto.bi/forum/)
+
 
 ## Contact / Bug Reports
 
-* https://crypto.bi/forum/forums/avax/
+[Crypto.bi Support](https://crypto.bi/forum/forums/avax/)
 
+Visit [my crypto.bi author page](https://crypto.bi/author/rektbuildr/) for avalanche-java related stuff.
 
