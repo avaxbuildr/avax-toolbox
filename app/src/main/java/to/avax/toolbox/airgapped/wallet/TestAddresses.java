@@ -22,7 +22,7 @@ import to.avax.avalanche.wallet.MnemonicWallet;
 public class TestAddresses {
 
     private final static int ADDRESS_COUNT = 20;
-    private final static String MNEMONIC = "fetch affair risk reveal dolphin disagree message detail squeeze infant field clap budget vague sell raven awake what stomach blanket above naive wisdom quote";
+    private final static String MNEMONIC = "other middle short original liquid wink drama shadow pink mind melody brass solution cry soon intact bacon viable upon same govern bargain second faculty";
     public static void main(String[] args) {
 
         String mnemonic = MNEMONIC;
@@ -35,7 +35,7 @@ public class TestAddresses {
         var wallet = new MnemonicWallet(MNEMONIC);
         HdHelper hdh = wallet.getExternalHelper();
 
-        for (int index=0; index<ADDRESS_COUNT; index++) {
+        for (int index = 0; index < ADDRESS_COUNT; index++) {
             String address = hdh.getAddressForIndex(index, Network.getFuji().getNetworkID());
             System.out.println(index + ": " + address);
         }
