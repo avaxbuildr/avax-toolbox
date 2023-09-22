@@ -82,3 +82,8 @@ task gm(type: JavaExec) {
     mainClass = "to.avax.toolbox.airgapped.gm.GMFrens"
     classpath = sourceSets.main.runtimeClasspath
 }
+
+task nodeversion(type: JavaExec) {
+    mainClass = "to.avax.toolbox.networked.apis.info.Peers"
+    classpath = sourceSets.main.runtimeClasspath
+}
