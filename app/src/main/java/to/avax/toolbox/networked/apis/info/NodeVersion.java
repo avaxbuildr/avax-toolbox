@@ -19,7 +19,7 @@ import to.avax.avalanche.network.NetworkConfig;
 
 import java.util.Map;
 
-public class Peers {
+public class NodeVersion {
     public static void main(String[] args) {
         NetworkConfig netConfig = Constants.getTestConfig();
         Avalanche avalanche = new Avalanche(netConfig);

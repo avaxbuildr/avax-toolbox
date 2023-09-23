@@ -84,6 +84,11 @@ task gm(type: JavaExec) {
 }
 
 task nodeversion(type: JavaExec) {
-    mainClass = "to.avax.toolbox.networked.apis.info.Peers"
+    mainClass = "to.avax.toolbox.networked.apis.info.NodeVersion"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task getutxos(type: JavaExec) {
+    mainClass = "to.avax.toolbox.networked.apis.avm.GetUTXOs"
     classpath = sourceSets.main.runtimeClasspath
 }
