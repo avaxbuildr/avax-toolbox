@@ -12,9 +12,8 @@
 package to.avax.toolbox.airgapped.wallet;
 
 import to.avax.avalanche.apis.avm.keychain.KeyPair;
-import to.avax.avalanche.utils.Bintools;
 import to.avax.avalanche.wallet.Types;
-
+import to.avax.avalanche.utils.BinTools;
 /**
  * Derive an address from an Avalanche public key
  * */
@@ -38,7 +37,7 @@ public class AddressFromPublicKey {
         }
 
         var addr = KeyPair.addressFromPublicKey(bKey);
-        String strAddr = Bintools.addressToString("avax", Types.ChainAlias.X, addr);
+        String strAddr = BinTools.addressToString("avax", Types.ChainAlias.X, addr);
         System.out.println(strAddr);
     }
 
